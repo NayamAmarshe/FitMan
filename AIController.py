@@ -1,11 +1,13 @@
 import mediapipe as mp
 import cv2
 import numpy as np
-import pyautogui as p
+# import pyautogui as p
 import time
+from directkeys import W, A, S, D, PressKey, ReleaseKey
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
+
 
 def calculate_elbowangle(hip, shoulder, elbow):
     hip = np.array(hip)  # hip
@@ -101,28 +103,40 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
             if left_elbow_angle > 90 and right_elbow_angle > 90 and left_wrist_angle > 100 and right_wrist_angle > 100:
-                p.keyUp('d')
-                p.keyUp('a')
-                p.keyDown('w')
+                ReleaseKey(S)
+                PressKey(W)
                 # time.sleep(1)
             elif left_elbow_angle < 90 and right_elbow_angle > 90:
-                p.keyUp('d')
-                p.keyDown('a')
+                ReleaseKey(A)
+                PressKey(D)
+                # p.keyUp('d')
+                # p.keyDown('a')
                 # p.keyDown('w')
                 # time.sleep(0.25)
             elif left_elbow_angle > 90 and right_elbow_angle < 90:
-                p.keyUp('a')
-                p.keyDown('d')
+                ReleaseKey(D)
+                PressKey(A)
+                # p.keyUp('a')
+                # p.keyDown('d')
                 # p.keyDown('w')
                 # time.sleep(0.25)
             elif left_elbow_angle > 90 and right_elbow_angle > 90 and left_wrist_angle < 90 and right_wrist_angle < 90:
-                p.keyDown('s')
-                p.keyUp('w')
+                ReleaseKey(W)
+                PressKey(S)
+                # p.keyDown('s')
+                # p.keyUp('w')
                 # time.sleep(0.25)
             else:
-                time.sleep(0.25)
+                ReleaseKey(A)
+                ReleaseKey(W)
+                ReleaseKey(S)
+                ReleaseKey(D)
 
         except:
+            ReleaseKey(A)
+            ReleaseKey(W)
+            ReleaseKey(S)
+            ReleaseKey(D)
             pass
 
 #         #draw face landmarks
@@ -142,8 +156,14 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
 
         # image show
         cv2.imshow('Holistic Model Detection', image)
+        
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
+
+ReleaseKey(A)
+ReleaseKey(W)
+ReleaseKey(S)
+ReleaseKey(D)
 
 cap.release()
 cv2.destroyAllWindows()
