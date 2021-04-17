@@ -103,19 +103,21 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
             if left_elbow_angle > 90 and right_elbow_angle > 90 and left_wrist_angle > 100 and right_wrist_angle > 100:
+                ReleaseKey(D)
+                ReleaseKey(A)
                 ReleaseKey(S)
                 PressKey(W)
                 # time.sleep(1)
             elif left_elbow_angle < 90 and right_elbow_angle > 90:
-                ReleaseKey(A)
-                PressKey(D)
+                ReleaseKey(D)
+                PressKey(A)
                 # p.keyUp('d')
                 # p.keyDown('a')
                 # p.keyDown('w')
                 # time.sleep(0.25)
             elif left_elbow_angle > 90 and right_elbow_angle < 90:
-                ReleaseKey(D)
-                PressKey(A)
+                ReleaseKey(A)
+                PressKey(D)
                 # p.keyUp('a')
                 # p.keyDown('d')
                 # p.keyDown('w')
