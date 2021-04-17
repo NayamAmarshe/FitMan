@@ -7,6 +7,7 @@ Fitman python script allows you to play your favorite racing games using your bo
 
 * Install Python3 in your PC.
 * Open terminal/powershell/cmd and enter: `pip install mediapipe opencv-python pyautogui`
+* Then `git clone https://github.com/NayamAmarshe/FitMan.git && cd FitM*`
 * Then launch the AIController.py script by double clicking and opening with Python **or**
 `python AIController*`
 
