@@ -14,7 +14,7 @@ Fitman python script allows you to play your favorite racing games using your bo
 **OR**
 `python AIController*` (Whatever works for you)  
 
-**Linux users need to install additional packages:** `sudo apt-get install python3-tk python3-dev`
+**Linux users need to download older commit, that uses pyautogui and then need to ** `sudo apt-get install python3-tk python3-dev`
 
 ## Usage
 
