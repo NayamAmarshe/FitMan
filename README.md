@@ -33,6 +33,9 @@ Fitman python script allows you to play your favorite racing games using your bo
 ### **STOP/REVERSE**  
 <a href="https://ibb.co/ZGzDNSN"><img src="https://i.ibb.co/9cH5GhG/image.png" alt="image" border="0" width="200px"></a>
 
+
+### Quit the Window using Q on Keyboard
+
 ## Troubleshooting
 
 If your camera doesn't work and shows a blank screen, please try changing the number in line 38
