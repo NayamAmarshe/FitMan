@@ -24,17 +24,25 @@ Fitman python script allows you to play your favorite racing games using your bo
 ### **ACCELERATE**  
 <a href="https://ibb.co/56xwV7h"><img src="https://i.ibb.co/s2JzrB9/image.png" alt="image" border="0" width="200px"></a>
 
-### **TURN RIGHT**  
-<a href="https://ibb.co/J5yTyZY"><img src="https://i.ibb.co/2gsrsJz/image.png" alt="image" border="0" width="200px"></a>
+### **TURN RIGHT WITH ACCELERATION**  
+<a href="https://ibb.co/ZXL7zxz"><img src="https://i.ibb.co/DWVTfQf/image.png" alt="image" border="0" width="200px"></a>
 
-### **TURN LEFT**  
-<a href="https://ibb.co/FqZ5m8b"><img src="https://i.ibb.co/0V4CmYj/image.png" alt="image" border="0" width="200px"></a>
+### **TURN RIGHT WITHOUT ACCELERATION**
+<a href="https://ibb.co/sbT9XdL"><img src="https://i.ibb.co/QpWvx3s/image.png" alt="image" border="0" width="200px"></a>
+
+### **TURN LEFT WITH ACCELERATION**  
+<a href="https://ibb.co/8PHTHts"><img src="https://i.ibb.co/h2ShSw9/image-4.png" alt="image-4" border="0" width="200px"></a>
+
+### **TURN LEFT WITHOUT ACCELERATION**
+<a href="https://ibb.co/5BDLXSR"><img src="https://i.ibb.co/f4RHVyx/New-Project-5.png" alt="New-Project-5" border="0" width="200px"></a>
 
 ### **STOP/REVERSE**  
 <a href="https://ibb.co/ZGzDNSN"><img src="https://i.ibb.co/9cH5GhG/image.png" alt="image" border="0" width="200px"></a>
 
+### **PRESS ENTER OR SPACE (TO RESTART GAMES)**
+<a href="https://ibb.co/zNchQFV"><img src="https://i.ibb.co/M9TDZfk/image.png" alt="image" border="0" width="200px"></a>
 
-### Quit the Window using Q on Keyboard
+### Quit the Window using Esc on Keyboard
 
 ## Troubleshooting
 
