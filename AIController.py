@@ -15,7 +15,8 @@ def calculate_elbowangle(hip, shoulder, elbow):
     elbow = np.array(elbow)  # wrist
 
     # 1 is y, 0 is x. Gets the vector from bc to ba
-    radians = np.arctan2(hip[1]-shoulder[1], hip[0]-shoulder[0]) - np.arctan2(elbow[1]-shoulder[1], elbow[0]-shoulder[0])
+    radians = np.arctan2(hip[1]-shoulder[1], hip[0]-shoulder[0]) - \
+        np.arctan2(elbow[1]-shoulder[1], elbow[0]-shoulder[0])
     elbowangle = np.abs(radians*180.0/np.pi)
 
     if elbowangle > 180.0:
@@ -30,13 +31,27 @@ def calculate_wristangle(shoulder, elbow, wrist):
     wrist = np.array(wrist)  # wrist
 
     # 1 is y, 0 is x. Gets the vector from bc to ba
-    radians = np.arctan2(shoulder[1]-elbow[1], shoulder[0]-elbow[0]) - np.arctan2(wrist[1]-elbow[1], wrist[0]-elbow[0])
+    radians = np.arctan2(shoulder[1]-elbow[1], shoulder[0]-elbow[0]) - \
+        np.arctan2(wrist[1]-elbow[1], wrist[0]-elbow[0])
     wristangle = np.abs(radians*180.0/np.pi)
 
     if wristangle > 180.0:
         wristangle = 360-wristangle
 
     return wristangle
+
+
+def calculate_shoulder_angle(shoulder1, shoulder2):
+    shoulder1 = np.array(shoulder1)  # hip
+    shoulder2 = np.array(shoulder2)  # elbow
+
+    # 1 is y, 0 is x. Gets the vector from bc to ba
+    radians = np.arctan2(shoulder1[1]-shoulder2[1], shoulder1[0]-shoulder2[0])
+    shoulder_angle = radians*180.0/np.pi
+    if shoulder_angle > 180.0:
+        shoulder_angle = 360-shoulder_angle
+
+    return shoulder_angle
 
 
 cap = cv2.VideoCapture(0)
@@ -76,6 +91,12 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             rightwrist = [landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
                           landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
 
+            # Caclulate shoulder angle
+            left_shoulder_angle = calculate_shoulder_angle(
+                leftshoulder, rightshoulder)
+            # right_shoulder_angle = calculate_shoulder_angle(
+            #     rightshoulder, leftshoulder)
+
             # Caclulate Elbow Angle
             left_elbow_angle = calculate_elbowangle(
                 lefthip, leftshoulder, leftelbow)
@@ -88,40 +109,29 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             right_wrist_angle = calculate_wristangle(
                 rightshoulder, rightelbow, rightwrist)
 
-            # # visualize
-            # # left elbow
-            # cv2.putText(image, str(left_elbow_angle), tuple(np.multiply(leftelbow, [640, 480]).astype(
+            # visualize
+            # left elbow
+            cv2.putText(image, str(left_shoulder_angle), tuple(np.multiply(leftshoulder, [640, 480]).astype(
+                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str(rightshoulder_angle), tuple(np.multiply(rightshoulder, [640, 480]).astype(
             #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
-            # # right elbow
-            # cv2.putText(image, str(right_elbow_angle), tuple(np.multiply(rightelbow, [640, 480]).astype(
-            #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
-            # # left wrist
-            # cv2.putText(image, str(left_wrist_angle), tuple(np.multiply(leftwrist, [640, 480]).astype(
-            #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
-            # # right wrist
-            # cv2.putText(image, str(right_wrist_angle), tuple(np.multiply(rightwrist, [640, 480]).astype(
-            #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # right elbow
+            cv2.putText(image, str(rightelbow[0]), tuple(np.multiply(rightelbow, [640, 480]).astype(
+                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # left wrist
+            cv2.putText(image, str(leftwrist[0]), tuple(np.multiply(leftwrist, [640, 480]).astype(
+                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # right wrist
+            cv2.putText(image, str(rightwrist[0]), tuple(np.multiply(rightwrist, [640, 480]).astype(
+                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
-            if left_elbow_angle > 90 and right_elbow_angle > 90 and left_wrist_angle > 100 and right_wrist_angle > 100:
-                ReleaseKey(D)
+            if left_elbow_angle > 90 and right_elbow_angle > 90 and left_wrist_angle > 90 and right_wrist_angle > 90:
                 ReleaseKey(A)
+                ReleaseKey(D)
                 ReleaseKey(S)
                 PressKey(W)
                 # time.sleep(1)
-            elif left_elbow_angle < 90 and right_elbow_angle > 90:
-                ReleaseKey(D)
-                PressKey(A)
-                # p.keyUp('d')
-                # p.keyDown('a')
-                # p.keyDown('w')
-                # time.sleep(0.25)
-            elif left_elbow_angle > 90 and right_elbow_angle < 90:
-                ReleaseKey(A)
-                PressKey(D)
-                # p.keyUp('a')
-                # p.keyDown('d')
-                # p.keyDown('w')
-                # time.sleep(0.25)
+
             elif left_elbow_angle > 90 and right_elbow_angle > 90 and left_wrist_angle < 90 and right_wrist_angle < 90:
                 ReleaseKey(W)
                 PressKey(S)
@@ -132,6 +142,16 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
                 ReleaseKey(A)
                 ReleaseKey(W)
                 ReleaseKey(S)
+                ReleaseKey(D)
+            print(left_shoulder_angle)
+            if left_shoulder_angle < -15:
+                ReleaseKey(A)
+                PressKey(D)
+            elif left_shoulder_angle > 15:
+                ReleaseKey(D)
+                PressKey(A)
+            else:
+                ReleaseKey(A)
                 ReleaseKey(D)
 
         except:
@@ -158,7 +178,7 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
 
         # image show
         cv2.imshow('Holistic Model Detection', image)
-        
+
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
