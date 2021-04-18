@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 # import pyautogui as p
 import time
-from directkeys import W, A, S, D, PressKey, ReleaseKey
+from directkeys import W, A, S, D, ENTER_KEY, SPACE_KEY, PressKey, ReleaseKey
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -91,6 +91,9 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
             rightwrist = [landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
                           landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
 
+
+            wrist_distance_x = np.abs(leftwrist[0] - rightwrist[0])
+            print(wrist_distance_x)
             # Caclulate shoulder angle
             left_shoulder_angle = calculate_shoulder_angle(
                 leftshoulder, rightshoulder)
@@ -111,19 +114,19 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
 
             # visualize
             # left elbow
-            cv2.putText(image, str(left_shoulder_angle), tuple(np.multiply(leftshoulder, [640, 480]).astype(
-                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str(left_shoulder_angle), tuple(np.multiply(leftshoulder, [640, 480]).astype(
+            #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
             # cv2.putText(image, str(rightshoulder_angle), tuple(np.multiply(rightshoulder, [640, 480]).astype(
             #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
             # right elbow
-            cv2.putText(image, str(rightelbow[0]), tuple(np.multiply(rightelbow, [640, 480]).astype(
-                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str(rightelbow[0]), tuple(np.multiply(rightelbow, [640, 480]).astype(
+            #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
             # left wrist
-            cv2.putText(image, str(leftwrist[0]), tuple(np.multiply(leftwrist, [640, 480]).astype(
-                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str(wrist_distance_x), tuple(np.multiply(leftwrist, [640, 480]).astype(
+            #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
             # right wrist
-            cv2.putText(image, str(rightwrist[0]), tuple(np.multiply(rightwrist, [640, 480]).astype(
-                int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(image, str(rightwrist[0]), tuple(np.multiply(rightwrist, [640, 480]).astype(
+            #     int)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
             if left_elbow_angle > 90 and right_elbow_angle > 90 and left_wrist_angle > 90 and right_wrist_angle > 90:
                 ReleaseKey(A)
@@ -143,17 +146,24 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
                 ReleaseKey(W)
                 ReleaseKey(S)
                 ReleaseKey(D)
-            print(left_shoulder_angle)
-            if left_shoulder_angle < -15:
+            # print(left_shoulder_angle)
+            
+            if left_shoulder_angle < -10:
                 ReleaseKey(A)
                 PressKey(D)
-            elif left_shoulder_angle > 15:
+            elif left_shoulder_angle > 10:
                 ReleaseKey(D)
                 PressKey(A)
             else:
                 ReleaseKey(A)
                 ReleaseKey(D)
 
+            if wrist_distance_x < 0.15:
+                PressKey(ENTER_KEY)
+                time.sleep(0.1)                
+                PressKey(SPACE_KEY)
+                ReleaseKey(ENTER_KEY)
+                ReleaseKey(SPACE_KEY)
         except:
             ReleaseKey(A)
             ReleaseKey(W)
@@ -173,13 +183,13 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
 #         mp_drawing.draw_landmarks(image, results.left_hand_landmarks,mp_holistic.HAND_CONNECTIONS)
 
         # pose
-        mp_drawing.draw_landmarks(
-            image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+        # mp_drawing.draw_landmarks(
+        #     image, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
         # image show
-        cv2.imshow('Holistic Model Detection', image)
+        cv2.imshow('FitMan AI Controller', image)
 
-        if cv2.waitKey(10) & 0xFF == ord('q'):
+        if cv2.waitKey(10) & 0xFF == ord('\x1b'):
             break
 
 ReleaseKey(A)
