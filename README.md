@@ -1,9 +1,19 @@
-# FitMan
-Get fit while playing games.😄  
-Fitman python script allows you to play your favorite racing games using your body movement.  
-**Work while you play.**
+<h1 align="center">FitMan</h1>
 
-## Installation
+<p align="center"><img src="https://socialify.git.ci/NayamAmarshe/FitMan/image?description=1&amp;font=Raleway&amp;language=1&amp;owner=1&amp;pattern=Plus&amp;theme=Light" alt="project"></p>
+
+<h2>🚀 Demo</h2>
+
+[https://github.com/NayamAmarshe/FitMan.githttps://github.com/NayamAmarshe/FitMan.git](https://github.com/NayamAmarshe/FitMan.githttps://github.com/NayamAmarshe/FitMan.git)
+ 
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+*   OpenCV
+*   Python
+
+## 👨‍💻 Installation
 
 * Install Python3 in your PC.
 * Open terminal/powershell/cmd and enter: `pip install mediapipe opencv-python pyautogui`
@@ -16,7 +26,7 @@ Fitman python script allows you to play your favorite racing games using your bo
 
 **Linux users need to download older commit, that uses pyautogui and then need to ** `sudo apt-get install python3-tk python3-dev`
 
-## Usage
+## 👋 Usage
 
 ### **IDLE**  
 <a href="https://ibb.co/rbdG9v3"><img src="https://i.ibb.co/n3PspRB/image.png" alt="image" border="0" width="200px"></a>
@@ -44,8 +54,13 @@ Fitman python script allows you to play your favorite racing games using your bo
 
 ### Quit the Window using Esc on Keyboard
 
-## Troubleshooting
+## ⚙️ Troubleshooting
 
 If your camera doesn't work and shows a blank screen, please try changing the number in line 38
 `cap = cv2.VideoCapture(0)`
 You can try 1,2,3 instead of 0 to see which port is working.
+
+
+<h2>🛡️ License:</h2>
+
+This project is licensed under the GPL2
